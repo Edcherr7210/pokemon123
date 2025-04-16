@@ -15,13 +15,14 @@ namespace PokemonGame
 {
     public partial class Battle : Form
     {
-        private List <PictureBox> CPUpokemon;
-        private List <Image> PlayerPokemon;
+        private List<PictureBox> CPUpokemon;
+        private List<Image> PlayerPokemon;
         private List<String> Moves;
-        private Dictionary <Image, List<String>> PlayerPokeAndMoves;
+        private Dictionary<Image, List<String>> PlayerPokeAndMoves;
         private Dictionary<Image, int> PlayerPokeAndHealth;
         private Dictionary<Image, List<String>> CPUPokeAndMoves;
         private Dictionary<Image, int> CPUPokeAndHealth;
+        private List<Button> Move;
         public Battle(Image tm1BackgroundImage1, Image tm1BackgroundImage2, Image tm1BackgroundImage3, Image tm1BackgroundImage4, Image tm1BackgroundImage5, Image tm1BackgroundImage6, Image butCharizard, Image butBlaziken, Image butBlastoise, Image butBarbaracle, Image butIncineroar, Image butAerodactyl, Image butArticuno, Image butDragapult, Image butDragonite, Image butFroslass, Image butGardevoir, Image butGengar, Image butGroudon, Image butKrookodile, Image butKyogre, Image butLucario, Image butGarchomp, Image butMewtwo, Image butPikachu, Image butSceptile, Image butShedinja, Image butSteelix, Image butSylveon, Image butTalonflame, Image butToxapex, Image butToxicroak, Image butTyranitar, Image butVenusaur, Image butVikavolt, Image butZapdos)
         {
             InitializeComponent();
@@ -34,14 +35,15 @@ namespace PokemonGame
             //Set Moves
             Moves = new List<String>() { };
 
+            Move = new List<Button> {Move1, Move2, Move3, Move4 };
             //Array Lists of Computer Pokemon and Player Pokemon
-            CPUpokemon = new List<PictureBox>();
-            PlayerPokemon = new List<Image>() {tm1BackgroundImage1,tm1BackgroundImage2, tm1BackgroundImage3, tm1BackgroundImage4, tm1BackgroundImage5, tm1BackgroundImage6 };
+            CPUpokemon = new List<PictureBox>() {team2Poke, team2Poke2, team2Poke3, team2Poke4, team2Poke5, team2Poke6};
+            PlayerPokemon = new List<Image>() { tm1BackgroundImage1, tm1BackgroundImage2, tm1BackgroundImage3, tm1BackgroundImage4, tm1BackgroundImage5, tm1BackgroundImage6 };
 
             PlayerPokeAndMoves = new Dictionary<Image, List<String>>();
-            for (int i = 0; i < 6; i++)
+            /*for (int i = 0; i < 6; i++)
             {
-                if (PlayerPokemon[i] == butAerodactyl)
+                if (CPUpokemon[i].BackgroundImage == butAerodactyl)
                 {
                     //type: rock and water
                     //weak against rock, electric, water, steel, ice
@@ -51,7 +53,7 @@ namespace PokemonGame
                     // Stone Edge 80% accuracy
                     //Aeiral Ace 100% accuracy 
                 }
-                else if (PlayerPokemon[i] == butArticuno)
+                else if (CPUpokemon[i].BackgroundImage == butArticuno)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Brave Bird", "Hurricane", "Ice Shard", "Frost Breath" };
                     //Brave Bird Flying 120 damage, special 1/3 of the damage to the user
@@ -62,7 +64,7 @@ namespace PokemonGame
                     //0.5, grass and bug
                     //Immune to ground
                 }
-                else if (PlayerPokemon[i] == butBarbaracle)
+                else if (CPUpokemon[i].BackgroundImage == butBarbaracle)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shell Smash", "Dragon Claw", "Razor Shell", "Stone Edge" };
                     //Dragon Claw 80 damage, 100% accuracy
@@ -72,7 +74,7 @@ namespace PokemonGame
                     // 0.25x fire
                     // Stone Edge 80% accuracy
                 }
-                else if (PlayerPokemon[i] == butBlastoise)
+                else if (CPUpokemon[i].BackgroundImage == butBlastoise)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Water Pulse", "Aura Sphere", "Dragon Pulse", "Dark Pulse" };
                     //Water pulse 60 damage, 20% confusion
@@ -82,7 +84,7 @@ namespace PokemonGame
                     //Weaknesses 2x electric and grass
                     //0.5x fire, water, ice, and steel
                 }
-                else if (PlayerPokemon[i] == butBlaziken)
+                else if (CPUpokemon[i].BackgroundImage == butBlaziken)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Stone Edge", "Hone Claws", "Blaze Kick", "High Jump Kick" };
                     //Stone Edge 80% accuracy
@@ -94,7 +96,7 @@ namespace PokemonGame
                     //0.25 bug
 
                 }
-                else if (PlayerPokemon[i] == butCharizard)
+                else if (CPUpokemon[i].BackgroundImage == butCharizard)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Earthquake", "Dragon Claw", "Dragon Dance", "Fire Blitz" };
                     //Earthquake ground, 100 damage
@@ -107,7 +109,7 @@ namespace PokemonGame
                     //immune ground
 
                 }
-                else if (PlayerPokemon[i] == butDragapult)
+                else if (CPUpokemon[i].BackgroundImage == butDragapult)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Dragon Darts", "Dragon Dance", "Night Shade", "Shadow Ball" };
                     //Dragon Darts Dragon type, 100 damage
@@ -118,7 +120,7 @@ namespace PokemonGame
                     //0.5x fire, water, electic, grass, posion, bug
                     //Immune cannot be hit by normal or fighting
                 }
-                else if (PlayerPokemon[i] == butKrookodile)
+                else if (CPUpokemon[i].BackgroundImage == butKrookodile)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
                     //Outrage:
@@ -129,7 +131,7 @@ namespace PokemonGame
                     //0.5x poision, rock, ghost, and dark
                     //Immune (not hit) electric, and psychic
                 }
-                else if (PlayerPokemon[i] == butKyogre)
+                else if (CPUpokemon[i].BackgroundImage == butKyogre)
                 {
 
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Water Spout", "Thunder", "Ice beam", "Origin Pulse" };
@@ -140,7 +142,7 @@ namespace PokemonGame
                     //Weaknesses 2x electric and grass
                     //0.5x fire, water, ice, and steel
                 }
-                else if (PlayerPokemon[i] == butMewtwo)
+                else if (CPUpokemon[i].BackgroundImage == butMewtwo)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Aura Sphere", "Thunder", "Shadow Ball", "Ice Beam" };
                     //Aura Sphere fighitng, 80 damage, 100% acc
@@ -150,7 +152,7 @@ namespace PokemonGame
                     //Weakness 2x bug, ghost, dark
                     //0.5 fighting and psychic
                 }
-                else if (PlayerPokemon[i] == butPikachu)
+                else if (CPUpokemon[i].BackgroundImage == butPikachu)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Brick Break", "Thunderbolt", "Thunder Punch", "Quick Attack" };
                     //Brick Break fighting type, 75 dmh
@@ -160,7 +162,7 @@ namespace PokemonGame
                     //Weakness 2x ground
                     //0.5x electric flying and steel
                 }
-                else if (PlayerPokemon[i] == butSceptile)
+                else if (CPUpokemon[i].BackgroundImage == butSceptile)
                 {
                     //Grass Type
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Hone Claws", "Leaf Blade", "Dynamic Punch", "Rock Slide" };
@@ -170,7 +172,7 @@ namespace PokemonGame
                     //Weakness 2x fire, ice, posion, flying, bug
                     //0.5 water, electric, grass, ground
                 }
-                else if (PlayerPokemon[i] == butShedinja)
+                else if (CPUpokemon[i].BackgroundImage == butShedinja)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Snake", "Sword Stance", "Giga Impact", "X-Scissor" };
                     //Shadow Snake ghost type, always goes first, 40dmg
@@ -180,7 +182,7 @@ namespace PokemonGame
                     //Can only be hit by fire, flyimg, rock, ghost, dark
                     //Immune to everything else ^
                 }
-                else if (PlayerPokemon[i] == butVenusaur)
+                else if (CPUpokemon[i].BackgroundImage == butVenusaur)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Solar Beam", "Earthquake", "Hidden Power", "Growth" };
                     //Solar Beam damage on second turn 120 dmg, grass type
@@ -190,7 +192,7 @@ namespace PokemonGame
                     //0.5x water, electric, fighting, fairy
                     //0.25x grass
                 }
-                else if (PlayerPokemon[i] == butDragonite)
+                else if (CPUpokemon[i].BackgroundImage == butDragonite)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Dragon Dance", "Roost", "Dragon Claw", "Fire Punch" };
                     //Roost restores half of users max hp
@@ -200,7 +202,7 @@ namespace PokemonGame
                     //0.25x grass
                     //Immune to ground
                 }
-                else if (PlayerPokemon[i] == butFroslass)
+                else if (CPUpokemon[i].BackgroundImage == butFroslass)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Claw", "Thunder Wave", "Shadow Ball", "Ice Beam" };
                     //Shadow Claw Ghost Type, 70 damage
@@ -208,14 +210,14 @@ namespace PokemonGame
                     //weak 2x fire, rock, ghost, dark, steel
                     //0.5 ice, poision, bug
                 }
-                else if (PlayerPokemon[i] == butGarchomp)
+                else if (CPUpokemon[i].BackgroundImage == butGarchomp)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "Earthquake", "Dragon Claw", "Outrage" };
                     //weakness 4x ice, 2x dragon, and fiary
                     //0.5 fire poision and rock
                     //immune to electric
                 }
-                else if (PlayerPokemon[i] == butGardevoir)
+                else if (CPUpokemon[i].BackgroundImage == butGardevoir)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
                     //Psychic 10% raise attack, 90dmg
@@ -225,7 +227,7 @@ namespace PokemonGame
                     //0.25x fighting
                     //Immune to dragon
                 }
-                else if (PlayerPokemon[i] == butGengar)
+                else if (CPUpokemon[i].BackgroundImage == butGengar)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Ball", "Thunderbolt", "Poltergeist", "Sludge Ball" };
                     //Poltergiest 100dmg, 90%acc, can only use 5 times
@@ -235,15 +237,15 @@ namespace PokemonGame
                     //0.25 posion and bug
                     //immune to normal and fighting
                 }
-                else if (PlayerPokemon[i] == butGroudon)
+                else if (CPUpokemon[i].BackgroundImage == butGroudon)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam"};
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam" };
                     //fire blast fire type, 10% burn, 110 damage, 85% acc
                     //weak 2x water, grass, ice
                     //0.5 poision, rock
                     //Immune to electric
                 }
-                else if (PlayerPokemon[i] == butIncineroar)
+                else if (CPUpokemon[i].BackgroundImage == butIncineroar)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Darkest Lariat", "Flame Charge", "Earthquake", "Sword Stance" };
                     //Darkest Lariat dark type, 85 dmg, hits, ignores if paralyzed or high def
@@ -252,16 +254,16 @@ namespace PokemonGame
                     //0.5 fire, grass, ice, ghost, dark, and steel
                     //immune psychic
                 }
-                else if (PlayerPokemon[i] == butLucario)
+                else if (CPUpokemon[i].BackgroundImage == butLucario)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" }; 
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" };
                     //Ice Punch 75 dmg
                     //weak 2x fire, fighting, and ground
                     //half to noraml,grass,ice,dragon,dark, and steel
                     //quarter to bug and rock
                     //immune to posion
                 }
-                else if (PlayerPokemon[i] == butSteelix)
+                else if (CPUpokemon[i].BackgroundImage == butSteelix)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Iron Tail", "Earthquake", "Rock Slide", "Crunch" };
                     //Iron Tail steel type, 30% raise attack by one stage, 100 dmg, 75% acc
@@ -272,7 +274,7 @@ namespace PokemonGame
                     //0.25 rock
                     //immune to elxtric and posion
                 }
-                else if (PlayerPokemon[i] == butSylveon)
+                else if (CPUpokemon[i].BackgroundImage == butSylveon)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Hypervoice", "Psyschock", "Shadow Ball", "Calm mind" };
                     //Psyshock 80 dmg
@@ -281,7 +283,7 @@ namespace PokemonGame
                     //0.5 fighitng, bug, dark
                     //immune to dragon
                 }
-                else if (PlayerPokemon[i] == butTalonflame)
+                else if (CPUpokemon[i].BackgroundImage == butTalonflame)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "Hurricane", "Flair Blitz", "Roost" };
                     //Flair Blitz 120 dmg, causes 0.25 damage of its max health to itself, 100% accurate
@@ -291,9 +293,9 @@ namespace PokemonGame
                     //immune to ground
 
                 }
-                else if (PlayerPokemon[i] == butToxapex)
+                else if (CPUpokemon[i].BackgroundImage == butToxapex)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap"};
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap" };
                     //Gunk Shot poision type move, 120 dmg, 80% acc
                     //Scald water, 30% burning, 80 dmg
                     //Liquidation water, 20% lowering defence by one stage, 85 dmg
@@ -302,7 +304,7 @@ namespace PokemonGame
                     //0.5x fire, water, ice, fighting, posion, bug, steel, fairy
 
                 }
-                else if (PlayerPokemon[i] == butToxicroak)
+                else if (CPUpokemon[i].BackgroundImage == butToxicroak)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Acid Spray", "Gunk Shot", "Mud Slap", "Ice Punch" };
                     //Acid Spray lowers def by 2 stages
@@ -310,14 +312,14 @@ namespace PokemonGame
                     //0.5x grass, fighiting, posion, rock , dark
                     //0.25 bug
                 }
-                else if (PlayerPokemon[i] == butTyranitar)
+                else if (CPUpokemon[i].BackgroundImage == butTyranitar)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Punch", "Dragon Dnace", "Stone Edge", "Ice Punch" };
                     //weak 4x fighting, 2x water, grass, ground, steel, bug, fairy
                     //0.5 normal, fire, poision, flying, ghost, and dark
                     //Immune Psychic
                 }
-                else if (PlayerPokemon[i] == butVikavolt)
+                else if (CPUpokemon[i].BackgroundImage == butVikavolt)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Bug Buzz", "Thunder", "Flash Cannon", "Crunch" };
                     //Bug Buzz bug type 90 damage, 10% lowering def by one stage
@@ -325,14 +327,14 @@ namespace PokemonGame
                     //weak 2x fire, rock
                     //0.5x electric grass, fighting and steel
                 }
-                else if (PlayerPokemon[i] == butZapdos)
+                else if (CPUpokemon[i].BackgroundImage == butZapdos)
                 {
                     PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Thunderbolt", "Thunder", "Roost", "Gunk Shot" };
                     //weak 2x ice and rock
                     //0.5 grass, fighting, flying, bug, and steel
                     //immune to ground
                 }
-            }
+            }*/
             //To Show players first pokemon in battle
             team1Poke.Image = PlayerPokemon[0];
 
@@ -346,17 +348,17 @@ namespace PokemonGame
                 int ranNum = rnd.Next(1, 30);
                 if (ranNum == 1)
                 {
-                    if(team2Poke.Image == null)
+                    if (team2Poke.Image == null)
                     {
                         team2Poke.Image = butCharizard;
                     }
-                    else if(team2Poke2.Image == null)
+                    else if (team2Poke2.Image == null)
                     {
                         team2Poke2.Image = butCharizard;
                     }
-                    else if(team2Poke3.Image == null)
-                    {  
-                        team2Poke3.Image  = butCharizard; 
+                    else if (team2Poke3.Image == null)
+                    {
+                        team2Poke3.Image = butCharizard;
                     }
                     else if (team2Poke4.Image == null)
                     {
@@ -403,7 +405,7 @@ namespace PokemonGame
 
                     speed2 = 284;
                     attack2 = 372;
-                    health2 = 364;                 
+                    health2 = 364;
                 }
                 else if (ranNum == 3)
                 {
@@ -432,7 +434,7 @@ namespace PokemonGame
                         team2Poke6.Image = butBlastoise;
                     }
                     speed2 = 280;
-                    attack2 = 291;        
+                    attack2 = 291;
                     health2 = 362;
                 }
                 else if (ranNum == 4)
@@ -1248,219 +1250,249 @@ namespace PokemonGame
                 }
             }
 
-            for (int i = 0; i < 6; i++)
-            {
-                if (PlayerPokemon[i] == butArticuno)
+            
+                if (PlayerPokemon[0] == butArticuno)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Brave Bird", "Hurricane", "Ice Shard", "Frost Breath" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Brave Bird", "Hurricane", "Ice Shard", "Frost Breath" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 295;
                     attack1 = 295;
                     health1 = 384;
+
                 }
-                else if (PlayerPokemon[i] == butAerodactyl)
+                else if (PlayerPokemon[0] == butAerodactyl)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Taunt", "Stealth Rock", "Stone Edge", "Aeiral Ace" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Taunt", "Stealth Rock", "Stone Edge", "Aeiral Ace" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 394;
                     attack1 = 339;
                     health1 = 364;
                 }
-                else if (PlayerPokemon[i] == butBarbaracle)
+                else if (PlayerPokemon[0] == butBarbaracle)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shell Smash", "Dragon Claw", "Razor Shell", "Stone Edge" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Shell Smash", "Dragon Claw", "Razor Shell", "Stone Edge" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 258;
                     attack1 = 339;
                     health1 = 348;
                 }
-                else if (PlayerPokemon[i] == butBlastoise)
+                else if (PlayerPokemon[0] == butBlastoise)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Water Pulse", "Aura Sphere", "Dragon Pulse", "Dark Pulse" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Water Pulse", "Aura Sphere", "Dragon Pulse", "Dark Pulse" };
+                    for(int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
+                   
                     speed1 = 280;
                     attack1 = 291;
                     health1 = 362;
                 }
-                else if (PlayerPokemon[i] == butBlaziken)
+                else if (PlayerPokemon[0] == butBlaziken)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Stone Edge", "Hone Claws", "Blaze Kick", "High Jump Kick" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Stone Edge", "Hone Claws", "Blaze Kick", "High Jump Kick" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
+                    
                     speed1 = 284;
                     attack1 = 372;
                     health1 = 364;
                 }
-                else if (PlayerPokemon[i] == butCharizard)
+                else if (PlayerPokemon[0] == butCharizard)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Earthquake", "Dragon Claw", "Dragon Dance", "Fire Blitz" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Earthquake", "Dragon Claw", "Dragon Dance", "Fire Blitz" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 328;
                     attack1 = 293;
                     health1 = 360;
                 }
-                else if (PlayerPokemon[i] == butDragapult)
+                else if (PlayerPokemon[0] == butDragapult)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Dragon Darts", "Dragon Dance", "Night Shade", "Shadow Ball" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Dragon Darts", "Dragon Dance", "Night Shade", "Shadow Ball" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 421;
                     attack1 = 372;
                     health1 = 380;
                 }
-                else if (PlayerPokemon[i] == butDragonite)
+                else if (PlayerPokemon[0] == butDragonite)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 284;
                     attack1 = 403;
                     health1 = 386;
                 }
-                else if (PlayerPokemon[i] == butFroslass)
+                else if (PlayerPokemon[0] == butFroslass)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Claw", "Thunder Wave", "Shadow Ball", "Ice Beam" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Shadow Claw", "Thunder Wave", "Shadow Ball", "Ice Beam" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 350;
                     attack1 = 284;
                     health1 = 344;
                 }
-                else if (PlayerPokemon[i] == butGardevoir)
+                else if (PlayerPokemon[0] == butGardevoir)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
-                    speed1 = 284;
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
+                speed1 = 284;
                     attack1 = 251;
                     health1 = 340;
                 }
-                else if (PlayerPokemon[i] == butGengar)
+                else if (PlayerPokemon[0] == butGengar)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Ball", "Thunderbolt", "Poltergeist", "Sludge Ball" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Shadow Ball", "Thunderbolt", "Poltergeist", "Sludge Ball" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 350;
                     attack1 = 251;
                     health1 = 324;
                 }
-                else if (PlayerPokemon[i] == butGroudon)
+                else if (PlayerPokemon[0] == butGroudon)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 306;
                     attack1 = 438;
                     health1 = 404;
                 }
-                else if (PlayerPokemon[i] == butKrookodile)
+                else if (PlayerPokemon[0] == butKrookodile)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 311;
                     attack1 = 366;
                     health1 = 394;
                 }
-                else if (PlayerPokemon[i] == butKyogre)
+                else if (PlayerPokemon[0] == butKyogre)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Water Spout", "Thunder", "Ice beam", "Origin Pulse" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Water Spout", "Thunder", "Ice beam", "Origin Pulse" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 306;
                     attack1 = 328;
                     health1 = 404;
                 }
-                else if (PlayerPokemon[i] == butLucario)
+                else if (PlayerPokemon[0] == butLucario)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 306;
                     attack1 = 350;
                     health1 = 344;
                 }
-                else if (PlayerPokemon[i] == butGarchomp)
+                else if (PlayerPokemon[0] == butGarchomp)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "Earthquake", "Dragon Claw", "Outrage" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Sword Stance", "Earthquake", "Dragon Claw", "Outrage" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 0;
                     attack1 = 0;
                     health1 = 0;
                 }
-                else if (PlayerPokemon[i] == butMewtwo)
+                else if (PlayerPokemon[0] == butMewtwo)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Aura Sphere", "Thunder", "Shadow Ball", "Ice Beam" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Aura Sphere", "Thunder", "Shadow Ball", "Ice Beam" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 262;
                     attack1 = 405;
                     health1 = 364;
                 }
-                else if (PlayerPokemon[i] == butPikachu)
+                else if (PlayerPokemon[0] == butPikachu)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Brick Break", "Thunderbolt", "Thunder Punch", "Quick Attack" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Brick Break", "Thunderbolt", "Thunder Punch", "Quick Attack" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 306;
                     attack1 = 229;
                     health1 = 274;
                 }
-                else if (PlayerPokemon[i] == butSceptile)
+                else if (PlayerPokemon[0] == butSceptile)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Hone Claws", "Leaf Blade", "Dynamic Punch", "Rock Slide" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Hone Claws", "Leaf Blade", "Dynamic Punch", "Rock Slide" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 372;
                     attack1 = 295;
                     health1 = 344;
                 }
-                else if (PlayerPokemon[i] == butShedinja)
+                else if (PlayerPokemon[0] == butShedinja)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Snake", "Sword Stance", "Giga Impact", "X-Scissor" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Shadow Snake", "Sword Stance", "Giga Impact", "X-Scissor" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 196;
                     attack1 = 306;
                     health1 = 1;
                 }
-                else if (PlayerPokemon[i] == butSteelix)
+                else if (PlayerPokemon[0] == butSteelix)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Iron Tail", "Earthquake", "Rock Slide", "Crunch" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Iron Tail", "Earthquake", "Rock Slide", "Crunch" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 251;
                     attack1 = 295;
                     health1 = 354;
                 }
-                else if (PlayerPokemon[i] == butSylveon)
+                else if (PlayerPokemon[0] == butSylveon)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Hypervoice", "Psyschock", "Shadow Ball", "Calm mind" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Hypervoice", "Psyschock", "Shadow Ball", "Calm mind" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 394;
                     attack1 = 251;
                     health1 = 240;
                 }
-                else if (PlayerPokemon[i] == butTalonflame)
+                else if (PlayerPokemon[0] == butTalonflame)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "Hurricane", "Flair Blitz", "Roost" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Sword Stance", "Hurricane", "Flair Blitz", "Roost" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 386;
                     attack1 = 287;
                     health1 = 360;
                 }
-                else if (PlayerPokemon[i] == butToxapex)
+                else if (PlayerPokemon[0] == butToxapex)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 386;
                     attack1 = 287;
                     health1 = 360;
                 }
-                else if (PlayerPokemon[i] == butTyranitar)
+                else if (PlayerPokemon[0] == butTyranitar)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Punch", "Dragon Dnace", "Stone Edge", "Ice Punch" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Fire Punch", "Dragon Dnace", "Stone Edge", "Ice Punch" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 243;
                     attack1 = 403;
                     health1 = 404;
                 }
-                else if (PlayerPokemon[i] == butToxicroak)
+                else if (PlayerPokemon[0] == butToxicroak)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Acid Spray", "Gunk Shot", "Mud Slap", "Ice Punch" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Acid Spray", "Gunk Shot", "Mud Slap", "Ice Punch" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 295;
                     attack1 = 342;
                     health1 = 370;
                 }
-                else if (PlayerPokemon[i] == butVenusaur)
+                else if (PlayerPokemon[0] == butVenusaur)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Solar Beam", "Earthquake", "Hidden Power", "Growth" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Solar Beam", "Earthquake", "Hidden Power", "Growth" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 284;
                     attack1 = 289;
                     health1 = 364;
                 }
-                else if (PlayerPokemon[i] == butVikavolt)
+                else if (PlayerPokemon[0] == butVikavolt)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Bug Buzz", "Thunder", "Flash Cannon", "Crunch" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Bug Buzz", "Thunder", "Flash Cannon", "Crunch" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 203;
                     attack1 = 262;
                     health1 = 358;
                 }
-                else if (PlayerPokemon[i] == butZapdos)
+                else if (PlayerPokemon[0] == butZapdos)
                 {
-                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Thunderbolt", "Thunder", "Roost", "Gunk Shot" };
+                    PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Thunderbolt", "Thunder", "Roost", "Gunk Shot" };
+                    for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
                     speed1 = 328;
                     attack1 = 306;
                     health1 = 384;
                 }
-            }
         }
         private int Rockslide()
         {
             Random rnd = new Random();
             int ran = rnd.Next(1, 10);
             int dmg = 75;
-            while(ran != 1)
+            while (ran != 1)
             {
                 return dmg;
             }
@@ -1472,7 +1504,7 @@ namespace PokemonGame
             Random rnd = new Random();
             int ran = rnd.Next(1, 5);
             int dmg = 100;
-            if(ran / 5 <= .20)
+            if (ran / 5 <= .20)
             {
                 return 0;
             }
@@ -1488,15 +1520,15 @@ namespace PokemonGame
             int ran = rnd.Next(1, 20);
             int dmg = 75;
 
-            if(ran / 20 <= .20)
+            if (ran / 20 <= .20)
             {
                 return 0;
             }
-            else 
+            else
             {
                 return dmg;
             }
-            
+
         }
 
         private int DragonClaw()
@@ -1522,7 +1554,7 @@ namespace PokemonGame
             Random rnd = new Random();
             int dmg;
             int ran = rnd.Next(1, 5);
-            if(ran == 2)
+            if (ran == 2)
             {
                 dmg = 80;
             }
@@ -1539,7 +1571,7 @@ namespace PokemonGame
             return dmg;
         }
 
-        private int DragonPulse ()
+        private int DragonPulse()
         {
             int dmg = 85;
             return dmg;
@@ -1563,7 +1595,7 @@ namespace PokemonGame
             int ran = rnd.Next(1, 10);
             //do three numbers
             int dmg = 130;
-            if(ran / 10 <= .20)
+            if (ran / 10 <= .20)
             {
                 return 0;
             }
@@ -1571,7 +1603,7 @@ namespace PokemonGame
             {
                 return dmg;
             }
-            
+
         }
 
         private int IceShard()
@@ -1585,7 +1617,7 @@ namespace PokemonGame
             Random rnd = new Random();
             int ran = rnd.Next(1, 10);
             int dmg = 60;
-            if(ran / 10 <= .20)
+            if (ran / 10 <= .20)
             {
                 return 0;
             }
@@ -1600,7 +1632,7 @@ namespace PokemonGame
             Random rnd = new Random();
             int ran = rnd.Next(1, 10);
             int dmg = 85;
-            if(ran / 10 <= .20)
+            if (ran / 10 <= .20)
             {
                 return 0;
             }
@@ -1616,7 +1648,7 @@ namespace PokemonGame
             Random rnd = new Random();
             int ran = rnd.Next(1, 5);
             int dmg = 85;
-            if(ran / 5 <= .20)
+            if (ran / 5 <= .20)
             {
                 return 0;
             }
@@ -1655,7 +1687,7 @@ namespace PokemonGame
         {
             //deals damage based on current user hp
             //(150 * hpcur) / hpmax
-            int dmg = (150* pokecurhealth) / pokeHPmax;
+            int dmg = (150 * pokecurhealth) / pokeHPmax;
             return dmg;
         }
 
@@ -1665,7 +1697,7 @@ namespace PokemonGame
             int ran = rnd.Next(1, 10);
             //do three numbers
             int dmg = 110;
-            if(ran / 10 <= .20)
+            if (ran / 10 <= .20)
             {
                 return 0;
             }
@@ -1686,7 +1718,7 @@ namespace PokemonGame
             Random rnd = new Random();
             int ran = rnd.Next(1, 5);
             int dmg = 190;
-            if(ran / 5 <= .20)
+            if (ran / 5 <= .20)
             {
                 return 0;
             }
@@ -1694,7 +1726,7 @@ namespace PokemonGame
             {
                 return dmg;
             }
-            
+
         }
 
         private int BrickBreak()
@@ -1776,7 +1808,7 @@ namespace PokemonGame
             {
                 dmg += 10;
             }
-            
+
             return dmg;
         }
 
@@ -1819,7 +1851,7 @@ namespace PokemonGame
         }
 
         private int IcePunch()
-        { 
+        {
             int dmg = 75;
             return dmg;
         }
@@ -1887,7 +1919,7 @@ namespace PokemonGame
         {
             for (int i = 0; i < CPUpokemon.Count; i++)
             {
-                
+
             }
         }
 
@@ -1898,36 +1930,11 @@ namespace PokemonGame
 
             }
         }
-        
 
+        private void button1_Click(object sender, EventArgs e)
+        {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }    
+        }
+    }
 }
 
