@@ -19,7 +19,9 @@ namespace PokemonGame
         private List <Image> PlayerPokemon;
         private List<String> Moves;
         private Dictionary <Image, List<String>> PlayerPokeAndMoves;
+        private Dictionary<Image, int> PlayerPokeAndHealth;
         private Dictionary<Image, List<String>> CPUPokeAndMoves;
+        private Dictionary<Image, int> CPUPokeAndHealth;
         public Battle(Image tm1BackgroundImage1, Image tm1BackgroundImage2, Image tm1BackgroundImage3, Image tm1BackgroundImage4, Image tm1BackgroundImage5, Image tm1BackgroundImage6, Image butCharizard, Image butBlaziken, Image butBlastoise, Image butBarbaracle, Image butIncineroar, Image butAerodactyl, Image butArticuno, Image butDragapult, Image butDragonite, Image butFroslass, Image butGardevoir, Image butGengar, Image butGroudon, Image butKrookodile, Image butKyogre, Image butLucario, Image butGarchomp, Image butMewtwo, Image butPikachu, Image butSceptile, Image butShedinja, Image butSteelix, Image butSylveon, Image butTalonflame, Image butToxapex, Image butToxicroak, Image butTyranitar, Image butVenusaur, Image butVikavolt, Image butZapdos)
         {
             InitializeComponent();
@@ -430,7 +432,7 @@ namespace PokemonGame
                         team2Poke6.Image = butBlastoise;
                     }
                     speed2 = 280;
-                    attack2 = 291;
+                    attack2 = 291;        
                     health2 = 362;
                 }
                 else if (ranNum == 4)
@@ -1087,7 +1089,7 @@ namespace PokemonGame
                     }
                     else if (team2Poke6.Image == null)
                     {
-                        team2Poke6.Image = butTalonflame;
+                        team2Poke6.Image = butToxapex;
                     }
                     speed2 = 386;
                     attack2 = 287;
@@ -1245,67 +1247,213 @@ namespace PokemonGame
                     health2 = 384;
                 }
             }
-            /*
-            for(int i = 0; i < 6; i++)
+
+            for (int i = 0; i < 6; i++)
             {
                 if (PlayerPokemon[i] == butArticuno)
                 {
-
-                } 
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Brave Bird", "Hurricane", "Ice Shard", "Frost Breath" };
+                    speed1 = 295;
+                    attack1 = 295;
+                    health1 = 384;
+                }
                 else if (PlayerPokemon[i] == butAerodactyl)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Taunt", "Stealth Rock", "Stone Edge", "Aeiral Ace" };
+                    speed1 = 394;
+                    attack1 = 339;
+                    health1 = 364;
                 }
                 else if (PlayerPokemon[i] == butBarbaracle)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shell Smash", "Dragon Claw", "Razor Shell", "Stone Edge" };
+                    speed1 = 258;
+                    attack1 = 339;
+                    health1 = 348;
                 }
                 else if (PlayerPokemon[i] == butBlastoise)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Water Pulse", "Aura Sphere", "Dragon Pulse", "Dark Pulse" };
+                    speed1 = 280;
+                    attack1 = 291;
+                    health1 = 362;
                 }
                 else if (PlayerPokemon[i] == butBlaziken)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Stone Edge", "Hone Claws", "Blaze Kick", "High Jump Kick" };
+                    speed1 = 284;
+                    attack1 = 372;
+                    health1 = 364;
                 }
                 else if (PlayerPokemon[i] == butCharizard)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Earthquake", "Dragon Claw", "Dragon Dance", "Fire Blitz" };
+                    speed1 = 328;
+                    attack1 = 293;
+                    health1 = 360;
                 }
                 else if (PlayerPokemon[i] == butDragapult)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Dragon Darts", "Dragon Dance", "Night Shade", "Shadow Ball" };
+                    speed1 = 421;
+                    attack1 = 372;
+                    health1 = 380;
                 }
                 else if (PlayerPokemon[i] == butDragonite)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                    speed1 = 284;
+                    attack1 = 403;
+                    health1 = 386;
                 }
                 else if (PlayerPokemon[i] == butFroslass)
                 {
-
-                }
-                else if (PlayerPokemon[i] == butGarchomp)
-                {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Claw", "Thunder Wave", "Shadow Ball", "Ice Beam" };
+                    speed1 = 350;
+                    attack1 = 284;
+                    health1 = 344;
                 }
                 else if (PlayerPokemon[i] == butGardevoir)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
+                    speed1 = 284;
+                    attack1 = 251;
+                    health1 = 340;
                 }
                 else if (PlayerPokemon[i] == butGengar)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Ball", "Thunderbolt", "Poltergeist", "Sludge Ball" };
+                    speed1 = 350;
+                    attack1 = 251;
+                    health1 = 324;
                 }
                 else if (PlayerPokemon[i] == butGroudon)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam" };
+                    speed1 = 306;
+                    attack1 = 438;
+                    health1 = 404;
                 }
-                else if (PlayerPokemon[i] == butBarbaracle)
+                else if (PlayerPokemon[i] == butKrookodile)
                 {
-
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                    speed1 = 311;
+                    attack1 = 366;
+                    health1 = 394;
                 }
-                else if (PlayerPokemon[i] == butBlastoise)*/
-            //}
+                else if (PlayerPokemon[i] == butKyogre)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Water Spout", "Thunder", "Ice beam", "Origin Pulse" };
+                    speed1 = 306;
+                    attack1 = 328;
+                    health1 = 404;
+                }
+                else if (PlayerPokemon[i] == butLucario)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" };
+                    speed1 = 306;
+                    attack1 = 350;
+                    health1 = 344;
+                }
+                else if (PlayerPokemon[i] == butGarchomp)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "Earthquake", "Dragon Claw", "Outrage" };
+                    speed1 = 0;
+                    attack1 = 0;
+                    health1 = 0;
+                }
+                else if (PlayerPokemon[i] == butMewtwo)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Aura Sphere", "Thunder", "Shadow Ball", "Ice Beam" };
+                    speed1 = 262;
+                    attack1 = 405;
+                    health1 = 364;
+                }
+                else if (PlayerPokemon[i] == butPikachu)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Brick Break", "Thunderbolt", "Thunder Punch", "Quick Attack" };
+                    speed1 = 306;
+                    attack1 = 229;
+                    health1 = 274;
+                }
+                else if (PlayerPokemon[i] == butSceptile)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Hone Claws", "Leaf Blade", "Dynamic Punch", "Rock Slide" };
+                    speed1 = 372;
+                    attack1 = 295;
+                    health1 = 344;
+                }
+                else if (PlayerPokemon[i] == butShedinja)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Shadow Snake", "Sword Stance", "Giga Impact", "X-Scissor" };
+                    speed1 = 196;
+                    attack1 = 306;
+                    health1 = 1;
+                }
+                else if (PlayerPokemon[i] == butSteelix)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Iron Tail", "Earthquake", "Rock Slide", "Crunch" };
+                    speed1 = 251;
+                    attack1 = 295;
+                    health1 = 354;
+                }
+                else if (PlayerPokemon[i] == butSylveon)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Hypervoice", "Psyschock", "Shadow Ball", "Calm mind" };
+                    speed1 = 394;
+                    attack1 = 251;
+                    health1 = 240;
+                }
+                else if (PlayerPokemon[i] == butTalonflame)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Sword Stance", "Hurricane", "Flair Blitz", "Roost" };
+                    speed1 = 386;
+                    attack1 = 287;
+                    health1 = 360;
+                }
+                else if (PlayerPokemon[i] == butToxapex)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap" };
+                    speed1 = 386;
+                    attack1 = 287;
+                    health1 = 360;
+                }
+                else if (PlayerPokemon[i] == butTyranitar)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Fire Punch", "Dragon Dnace", "Stone Edge", "Ice Punch" };
+                    speed1 = 243;
+                    attack1 = 403;
+                    health1 = 404;
+                }
+                else if (PlayerPokemon[i] == butToxicroak)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Acid Spray", "Gunk Shot", "Mud Slap", "Ice Punch" };
+                    speed1 = 295;
+                    attack1 = 342;
+                    health1 = 370;
+                }
+                else if (PlayerPokemon[i] == butVenusaur)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Solar Beam", "Earthquake", "Hidden Power", "Growth" };
+                    speed1 = 284;
+                    attack1 = 289;
+                    health1 = 364;
+                }
+                else if (PlayerPokemon[i] == butVikavolt)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Bug Buzz", "Thunder", "Flash Cannon", "Crunch" };
+                    speed1 = 203;
+                    attack1 = 262;
+                    health1 = 358;
+                }
+                else if (PlayerPokemon[i] == butZapdos)
+                {
+                    PlayerPokeAndMoves[PlayerPokemon[i]] = new List<String> { "Thunderbolt", "Thunder", "Roost", "Gunk Shot" };
+                    speed1 = 328;
+                    attack1 = 306;
+                    health1 = 384;
+                }
+            }
         }
         private int Rockslide()
         {
@@ -1371,8 +1519,17 @@ namespace PokemonGame
 
         private int WaterPulse()
         {
-            //20% confussion
-            int dmg = 60;
+            Random rnd = new Random();
+            int dmg;
+            int ran = rnd.Next(1, 5);
+            if(ran == 2)
+            {
+                dmg = 80;
+            }
+            else
+            {
+                dmg = 60;
+            }
             return dmg;
         }
 
@@ -1611,8 +1768,15 @@ namespace PokemonGame
 
         private int Psychic()
         {
-            //1 in 10 to lower def
+            Random rdn = new Random();
+            int ran = rdn.Next(1, 10);
             int dmg = 90;
+
+            if (ran == 3)
+            {
+                dmg += 10;
+            }
+            
             return dmg;
         }
 
