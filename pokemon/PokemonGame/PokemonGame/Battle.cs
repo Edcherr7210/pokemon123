@@ -1330,7 +1330,7 @@ namespace PokemonGame
                 {
                     PlayerPokeAndMoves[PlayerPokemon[0]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
                     for (int j = 0; j < Move.Count; j++) { Move[j].Text = PlayerPokeAndMoves[PlayerPokemon[0]][j]; }
-                speed1 = 284;
+                    speed1 = 284;
                     attack1 = 251;
                     health1 = 340;
                 }
