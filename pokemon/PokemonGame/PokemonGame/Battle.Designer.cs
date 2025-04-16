@@ -34,10 +34,10 @@
             team2Poke = new PictureBox();
             progressBar1 = new ProgressBar();
             progressBar2 = new ProgressBar();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
+            Move1 = new Button();
+            Move2 = new Button();
+            Move3 = new Button();
+            Move4 = new Button();
             team2Poke2 = new PictureBox();
             team2Poke3 = new PictureBox();
             team2Poke5 = new PictureBox();
@@ -55,135 +55,150 @@
             // team1Poke
             // 
             team1Poke.BackgroundImageLayout = ImageLayout.Zoom;
-            team1Poke.Location = new Point(72, 208);
+            team1Poke.Location = new Point(180, 499);
+            team1Poke.Margin = new Padding(8, 7, 8, 7);
             team1Poke.Name = "team1Poke";
-            team1Poke.Size = new Size(230, 165);
+            team1Poke.Size = new Size(575, 396);
             team1Poke.TabIndex = 0;
             team1Poke.TabStop = false;
             // 
             // team2Poke
             // 
             team2Poke.BackgroundImageLayout = ImageLayout.Zoom;
-            team2Poke.Location = new Point(636, 96);
+            team2Poke.Location = new Point(1590, 230);
+            team2Poke.Margin = new Padding(8, 7, 8, 7);
             team2Poke.Name = "team2Poke";
-            team2Poke.Size = new Size(230, 165);
+            team2Poke.Size = new Size(575, 396);
             team2Poke.TabIndex = 1;
             team2Poke.TabStop = false;
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(636, 35);
+            progressBar1.Location = new Point(1590, 84);
+            progressBar1.Margin = new Padding(8, 7, 8, 7);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(228, 37);
+            progressBar1.Size = new Size(570, 89);
             progressBar1.TabIndex = 2;
             // 
             // progressBar2
             // 
-            progressBar2.Location = new Point(78, 145);
+            progressBar2.Location = new Point(195, 348);
+            progressBar2.Margin = new Padding(8, 7, 8, 7);
             progressBar2.Name = "progressBar2";
-            progressBar2.Size = new Size(228, 37);
+            progressBar2.Size = new Size(570, 89);
             progressBar2.TabIndex = 3;
             // 
-            // button1
+            // Move1
             // 
-            button1.Location = new Point(2, 410);
-            button1.Name = "button1";
-            button1.Size = new Size(234, 131);
-            button1.TabIndex = 5;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            Move1.Location = new Point(5, 984);
+            Move1.Margin = new Padding(8, 7, 8, 7);
+            Move1.Name = "Move1";
+            Move1.Size = new Size(585, 314);
+            Move1.TabIndex = 5;
+            Move1.Text = "Move1";
+            Move1.UseVisualStyleBackColor = true;
+            Move1.Click += button1_Click;
             // 
-            // button2
+            // Move2
             // 
-            button2.Location = new Point(235, 410);
-            button2.Name = "button2";
-            button2.Size = new Size(237, 131);
-            button2.TabIndex = 6;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
+            Move2.Location = new Point(588, 984);
+            Move2.Margin = new Padding(8, 7, 8, 7);
+            Move2.Name = "Move2";
+            Move2.Size = new Size(592, 314);
+            Move2.TabIndex = 6;
+            Move2.Text = "button2";
+            Move2.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // Move3
             // 
-            button3.Location = new Point(452, 410);
-            button3.Name = "button3";
-            button3.Size = new Size(238, 131);
-            button3.TabIndex = 7;
-            button3.Text = "button3";
-            button3.UseVisualStyleBackColor = true;
+            Move3.Location = new Point(1130, 984);
+            Move3.Margin = new Padding(8, 7, 8, 7);
+            Move3.Name = "Move3";
+            Move3.Size = new Size(595, 314);
+            Move3.TabIndex = 7;
+            Move3.Text = "button3";
+            Move3.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // Move4
             // 
-            button4.Location = new Point(681, 410);
-            button4.Name = "button4";
-            button4.Size = new Size(238, 131);
-            button4.TabIndex = 8;
-            button4.Text = "button4";
-            button4.UseVisualStyleBackColor = true;
+            Move4.Location = new Point(1702, 984);
+            Move4.Margin = new Padding(8, 7, 8, 7);
+            Move4.Name = "Move4";
+            Move4.Size = new Size(595, 314);
+            Move4.TabIndex = 8;
+            Move4.Text = "button4";
+            Move4.UseVisualStyleBackColor = true;
             // 
             // team2Poke2
             // 
             team2Poke2.BackgroundImageLayout = ImageLayout.Zoom;
-            team2Poke2.Location = new Point(505, 30);
+            team2Poke2.Location = new Point(1262, 72);
+            team2Poke2.Margin = new Padding(8, 7, 8, 7);
             team2Poke2.Name = "team2Poke2";
-            team2Poke2.Size = new Size(120, 71);
+            team2Poke2.Size = new Size(300, 170);
             team2Poke2.TabIndex = 9;
             team2Poke2.TabStop = false;
             // 
             // team2Poke3
             // 
             team2Poke3.BackgroundImageLayout = ImageLayout.Zoom;
-            team2Poke3.Location = new Point(379, 30);
+            team2Poke3.Location = new Point(948, 72);
+            team2Poke3.Margin = new Padding(8, 7, 8, 7);
             team2Poke3.Name = "team2Poke3";
-            team2Poke3.Size = new Size(120, 71);
+            team2Poke3.Size = new Size(300, 170);
             team2Poke3.TabIndex = 10;
             team2Poke3.TabStop = false;
             // 
             // team2Poke5
             // 
             team2Poke5.BackgroundImageLayout = ImageLayout.Zoom;
-            team2Poke5.Location = new Point(124, 30);
+            team2Poke5.Location = new Point(310, 72);
+            team2Poke5.Margin = new Padding(8, 7, 8, 7);
             team2Poke5.Name = "team2Poke5";
-            team2Poke5.Size = new Size(120, 71);
+            team2Poke5.Size = new Size(300, 170);
             team2Poke5.TabIndex = 11;
             team2Poke5.TabStop = false;
             // 
             // team2Poke6
             // 
             team2Poke6.BackgroundImageLayout = ImageLayout.Zoom;
-            team2Poke6.Location = new Point(-2, 30);
+            team2Poke6.Location = new Point(-5, 72);
+            team2Poke6.Margin = new Padding(8, 7, 8, 7);
             team2Poke6.Name = "team2Poke6";
-            team2Poke6.Size = new Size(120, 71);
+            team2Poke6.Size = new Size(300, 170);
             team2Poke6.TabIndex = 12;
             team2Poke6.TabStop = false;
             // 
             // team2Poke4
             // 
             team2Poke4.BackgroundImageLayout = ImageLayout.Zoom;
-            team2Poke4.Location = new Point(250, 30);
+            team2Poke4.Location = new Point(625, 72);
+            team2Poke4.Margin = new Padding(8, 7, 8, 7);
             team2Poke4.Name = "team2Poke4";
-            team2Poke4.Size = new Size(120, 71);
+            team2Poke4.Size = new Size(300, 170);
             team2Poke4.TabIndex = 13;
             team2Poke4.TabStop = false;
             // 
             // Battle
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(20F, 48F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Zoom;
-            ClientSize = new Size(967, 583);
+            ClientSize = new Size(2418, 1399);
             Controls.Add(team2Poke4);
             Controls.Add(team2Poke6);
             Controls.Add(team2Poke5);
             Controls.Add(team2Poke3);
             Controls.Add(team2Poke2);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(Move4);
+            Controls.Add(Move3);
+            Controls.Add(Move2);
+            Controls.Add(Move1);
             Controls.Add(progressBar2);
             Controls.Add(progressBar1);
             Controls.Add(team2Poke);
             Controls.Add(team1Poke);
+            Margin = new Padding(8, 7, 8, 7);
             Name = "Battle";
             Text = "Battle";
             ((System.ComponentModel.ISupportInitialize)team1Poke).EndInit();
@@ -202,10 +217,10 @@
         private PictureBox team2Poke;
         private ProgressBar progressBar1;
         private ProgressBar progressBar2;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
+        private Button Move1;
+        private Button Move2;
+        private Button Move3;
+        private Button Move4;
         private PictureBox team2Poke2;
         private PictureBox team2Poke3;
         private PictureBox team2Poke5;
