@@ -129,23 +129,23 @@ namespace PokemonGame
                 {
                     legendary = true;
                 }
+            }
 
-                if (legendary)
-                {
-                    butKyogre.Enabled = false;
-                    butArticuno.Enabled = false;
-                    butZapdos.Enabled = false;
-                    butMewtwo.Enabled = false;
-                    butGroudon.Enabled = false;
-                }
-                else
-                {
-                    butKyogre.Enabled = true;
-                    butArticuno.Enabled = true;
-                    butZapdos.Enabled = true;
-                    butMewtwo.Enabled = true;
-                    butGroudon.Enabled = true;
-                }
+            if (legendary)
+            {
+                butKyogre.Enabled = false;
+                butArticuno.Enabled = false;
+                butZapdos.Enabled = false;
+                butMewtwo.Enabled = false;
+                butGroudon.Enabled = false;
+            }
+            else
+            {
+                butKyogre.Enabled = true;
+                butArticuno.Enabled = true;
+                butZapdos.Enabled = true;
+                butMewtwo.Enabled = true;
+                butGroudon.Enabled = true;
             }
         }
 

@@ -32,8 +32,8 @@
         {
             team1Poke = new PictureBox();
             team2Poke = new PictureBox();
-            progressBar1 = new ProgressBar();
-            progressBar2 = new ProgressBar();
+            CPUHealth = new ProgressBar();
+            PlayerHealth = new ProgressBar();
             Move1 = new Button();
             Move2 = new Button();
             Move3 = new Button();
@@ -72,21 +72,21 @@
             team2Poke.TabIndex = 1;
             team2Poke.TabStop = false;
             // 
-            // progressBar1
+            // CPUHealth
             // 
-            progressBar1.Location = new Point(1590, 84);
-            progressBar1.Margin = new Padding(8, 7, 8, 7);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(570, 89);
-            progressBar1.TabIndex = 2;
+            CPUHealth.Location = new Point(1590, 84);
+            CPUHealth.Margin = new Padding(8, 7, 8, 7);
+            CPUHealth.Name = "CPUHealth";
+            CPUHealth.Size = new Size(570, 89);
+            CPUHealth.TabIndex = 2;
             // 
-            // progressBar2
+            // PlayerHealth
             // 
-            progressBar2.Location = new Point(195, 348);
-            progressBar2.Margin = new Padding(8, 7, 8, 7);
-            progressBar2.Name = "progressBar2";
-            progressBar2.Size = new Size(570, 89);
-            progressBar2.TabIndex = 3;
+            PlayerHealth.Location = new Point(195, 348);
+            PlayerHealth.Margin = new Padding(8, 7, 8, 7);
+            PlayerHealth.Name = "PlayerHealth";
+            PlayerHealth.Size = new Size(570, 89);
+            PlayerHealth.TabIndex = 3;
             // 
             // Move1
             // 
@@ -97,7 +97,7 @@
             Move1.TabIndex = 5;
             Move1.Text = "Move1";
             Move1.UseVisualStyleBackColor = true;
-            Move1.Click += button1_Click;
+            Move1.Click += Move1_Click;
             // 
             // Move2
             // 
@@ -106,8 +106,9 @@
             Move2.Name = "Move2";
             Move2.Size = new Size(592, 314);
             Move2.TabIndex = 6;
-            Move2.Text = "button2";
+            Move2.Text = "Move2";
             Move2.UseVisualStyleBackColor = true;
+            Move2.Click += Move2_Click;
             // 
             // Move3
             // 
@@ -116,8 +117,9 @@
             Move3.Name = "Move3";
             Move3.Size = new Size(595, 314);
             Move3.TabIndex = 7;
-            Move3.Text = "button3";
+            Move3.Text = "Move3";
             Move3.UseVisualStyleBackColor = true;
+            Move3.Click += Move3_Click;
             // 
             // Move4
             // 
@@ -126,8 +128,9 @@
             Move4.Name = "Move4";
             Move4.Size = new Size(595, 314);
             Move4.TabIndex = 8;
-            Move4.Text = "button4";
+            Move4.Text = "Move4";
             Move4.UseVisualStyleBackColor = true;
+            Move4.Click += Move4_Click;
             // 
             // team2Poke2
             // 
@@ -194,8 +197,8 @@
             Controls.Add(Move3);
             Controls.Add(Move2);
             Controls.Add(Move1);
-            Controls.Add(progressBar2);
-            Controls.Add(progressBar1);
+            Controls.Add(PlayerHealth);
+            Controls.Add(CPUHealth);
             Controls.Add(team2Poke);
             Controls.Add(team1Poke);
             Margin = new Padding(8, 7, 8, 7);
@@ -215,8 +218,8 @@
 
         private PictureBox team1Poke;
         private PictureBox team2Poke;
-        private ProgressBar progressBar1;
-        private ProgressBar progressBar2;
+        private ProgressBar CPUHealth;
+        private ProgressBar PlayerHealth;
         private Button Move1;
         private Button Move2;
         private Button Move3;
