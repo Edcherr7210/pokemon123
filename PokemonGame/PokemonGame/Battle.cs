@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using System.Text;
@@ -20,15 +21,21 @@ namespace PokemonGame
         private List<PictureBox> CPUpokemon;
         private List<Image> PlayerPokemon;
         private Dictionary<Image, List<String>> PlayerPokeAndMoves;
-        private Dictionary<Image, int> PlayerPokeAndHealth;
-        private Dictionary<Image, List<String>> CPUPokeAndMoves;
-        private Dictionary<Image, int> CPUPokeAndHealth;
+        
+        private Dictionary<PictureBox, List<String>> CPUPokeAndMove;
+        
         private List<Button> Move;
 
+        private bool whoTurn = true;
 
+        private int speed1, speed2, attack1, attack2, health1, health2, defense1, defense2 = 0;
+
+        
         public Battle(Image tm1BackgroundImage1, Image tm1BackgroundImage2, Image tm1BackgroundImage3, Image tm1BackgroundImage4, Image tm1BackgroundImage5, Image tm1BackgroundImage6, Image butCharizard, Image butBlaziken, Image butBlastoise, Image butBarbaracle, Image butIncineroar, Image butAerodactyl, Image butArticuno, Image butDragapult, Image butDragonite, Image butFroslass, Image butGardevoir, Image butGengar, Image butGroudon, Image butKrookodile, Image butKyogre, Image butLucario, Image butGarchomp, Image butMewtwo, Image butPikachu, Image butSceptile, Image butShedinja, Image butSteelix, Image butSylveon, Image butTalonflame, Image butToxapex, Image butToxicroak, Image butTyranitar, Image butVenusaur, Image butVikavolt, Image butZapdos)
         {
             InitializeComponent();
+
+            
 
             //Set health
 
@@ -36,7 +43,7 @@ namespace PokemonGame
             //Array Lists of Computer Pokemon and Player Pokemon
             CPUpokemon = new List<PictureBox>() { team2Poke, team2Poke2, team2Poke3, team2Poke4, team2Poke5, team2Poke6 };
             PlayerPokemon = new List<Image>() { tm1BackgroundImage1, tm1BackgroundImage2, tm1BackgroundImage3, tm1BackgroundImage4, tm1BackgroundImage5, tm1BackgroundImage6 };
-
+            
             PlayerPokeAndMoves = new Dictionary<Image, List<String>>();
 
             CPUHealth.Maximum = 404;
@@ -44,300 +51,323 @@ namespace PokemonGame
             PlayerHealth.Maximum = 404;
             PlayerHealth.Minimum = 0;
 
-            /*for (int i = 0; i < 6; i++)
+            /*if (CPUpokemon[0].BackgroundImage == butAerodactyl)
             {
-                if (CPUpokemon[i].BackgroundImage == butAerodactyl)
+                String move;
+                int selectMove;
+                //type: rock and water
+                //weak against rock, electric, water, steel, ice
+                //cannot be hit by ground type moves
+                //resist normal, fire, poison, flying, bug
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Taunt", "Stealth Rock", "Stone Edge", "Aeiral Ace" };
+                // Stone Edge 80% accuracy
+                //Aeiral Ace 100% accuracy
+
+                Random ran = new Random();
+                selectMove = ran.Next(1, 5);
+
+                CPUPokeAndMove[CPUpokemon[0]][selectMove];
+
+                if (move == "Taunt")
                 {
-                    //type: rock and water
-                    //weak against rock, electric, water, steel, ice
-                    //cannot be hit by ground type moves
-                    //resist normal, fire, poison, flying, bug
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Taunt", "Stealth Rock", "Stone Edge", "Aeiral Ace" };
-                    // Stone Edge 80% accuracy
-                    //Aeiral Ace 100% accuracy
-                }
-                else if (CPUpokemon[i].BackgroundImage == butArticuno)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Brave Bird", "Hurricane", "Ice Shard", "Frost Breath" };
-                    //Brave Bird Flying 120 damage, special 1/3 of the damage to the user
-                    //Hurricane Flying type, 130 damage 70% accuracy, 30% confussion
-                    //Ice Shard Ice type, 40 damage
-                    //Frost Breath always a crit hit, 60 damage, 90% accuracy
-                    //Weaknesses 4x rock, 2x fire, electric, and steel
-                    //0.5, grass and bug
-                    //Immune to ground
-                }
-                else if (CPUpokemon[i].BackgroundImage == butBarbaracle)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Shell Smash", "Dragon Claw", "Razor Shell", "Stone Edge" };
-                    //Dragon Claw 80 damage, 100% accuracy
-                    //Razor Shell 95% accuracy, 75 damage
-                    //4x grass, 2x electric, 2x fighting, 2x ground <- weaknesses
-                    //0.5x normal, ice, poision, flying
-                    // 0.25x fire
-                    // Stone Edge 80% accuracy
-                }
-                else if (CPUpokemon[i].BackgroundImage == butBlastoise)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Water Pulse", "Aura Sphere", "Dragon Pulse", "Dark Pulse" };
-                    //Water pulse 60 damage, 20% confusion
-                    //Aura Sphere fighitng, 80 damage, 100% acc
-                    //Dragon Pulse dragon, 85 damage
-                    //Dark dark, 80 damage
-                    //Weaknesses 2x electric and grass
-                    //0.5x fire, water, ice, and steel
-                }
-                else if (CPUpokemon[i].BackgroundImage == butBlaziken)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Stone Edge", "Hone Claws", "Blaze Kick", "High Jump Kick" };
-                    //Stone Edge 80% accuracy
-                    //Hone Claws raise attack
-                    //Blaze Kick fire type, 85 damage, 90% acc
-                    //High Jump Kick fighting type, if misses half health to yourself, 100 damage, 85% acc
-                    //Weaknesses 2x water, ground, flying, psychic
-                    //0.5x fire, grass, ice, dark, steel
-                    //0.25 bug
 
                 }
-                else if (CPUpokemon[i].BackgroundImage == butCharizard)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Earthquake", "Dragon Claw", "Dragon Dance", "Fire Blitz" };
-                    //Earthquake ground, 100 damage
-                    //Dragon Claw 80 damage, 100% accuracy
-                    //Dragon Dance raises attack, and speed, by one stage
-                    //Fire Blitz fire, hits, 120 damage, 1/3 of damage to user (brave bird but fire)
-                    //Weakness 4x rock, 2x water and electric,
-                    //0.5x fire, fighting, steel, fairy,
-                    //0.25x grass, bug
-                    //immune ground
-
-                }
-                else if (CPUpokemon[i].BackgroundImage == butDragapult)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Dragon Darts", "Dragon Dance", "Night Shade", "Shadow Ball" };
-                    //Dragon Darts Dragon type, 100 damage
-                    //Dragon Dance raises attack, and speed, by one stage
-                    //Night Shade 50 damage
-                    //Shadow Ball ghost type, 20% chance to raise attack, 80 dmg
-                    //Weakness 2x ice, ghost, dragon, dark, fairy
-                    //0.5x fire, water, electic, grass, posion, bug
-                    //Immune cannot be hit by normal or fighting
-                }
-                else if (CPUpokemon[i].BackgroundImage == butKrookodile)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
-                    //Outrage:
-                    //Stone Edge 80% accuracy
-                    //Earthquake ground, 100 damage
-                    //Crunch Dark type move, 80 damage
-                    //Weaknesses 2x water, grass, ice, fighting, bug, and fairy
-                    //0.5x poision, rock, ghost, and dark
-                    //Immune (not hit) electric, and psychic
-                }
-                else if (CPUpokemon[i].BackgroundImage == butKyogre)
+                else if (move == "Stealth Rock")
                 {
 
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Water Spout", "Thunder", "Ice beam", "Origin Pulse" };
-                    //Water spout (150 x crhp) / hpmax
-                    //Thunder 3/10 chance for par, 110 damage, 70% acc
-                    //Ice Beam Ice type, 10% freeze, 90 damage
-                    //Origin Pulse 180 damage, 80% acc
-                    //Weaknesses 2x electric and grass
-                    //0.5x fire, water, ice, and steel
                 }
-                else if (CPUpokemon[i].BackgroundImage == butMewtwo)
+                else if (move == "Stone Edge")
                 {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Aura Sphere", "Thunder", "Shadow Ball", "Ice Beam" };
-                    //Aura Sphere fighitng, 80 damage, 100% acc
-                    //Thunder 3/10 chance for par, 110 damage, 70% acc
-                    //Ice Beam Ice type, 10% freeze, 90 damage
-                    //Shadow Ball ghost type, 20 % chance to raise attack, 80 dmg
-                    //Weakness 2x bug, ghost, dark
-                    //0.5 fighting and psychic
-                }
-                else if (CPUpokemon[i].BackgroundImage == butPikachu)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Brick Break", "Thunderbolt", "Thunder Punch", "Quick Attack" };
-                    //Brick Break fighting type, 75 dmh
-                    //Thunder type elctric, 10% par, 90 dmg
-                    //Thunder Punc 10% par, 75 dmg
-                    //Quick Attack  40 damage, always hits first (set speed nuts cause why not)
-                    //Weakness 2x ground
-                    //0.5x electric flying and steel
-                }
-                else if (CPUpokemon[i].BackgroundImage == butSceptile)
-                {
-                    //Grass Type
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Hone Claws", "Leaf Blade", "Dynamic Punch", "Rock Slide" };
-                    //Leaf Blade grass, 90 dmg, crit 1/8
-                    //Dynamic Punch, 100% confussion, 100 dmg, 50% acc
-                    //Rock Slide rock, 75 dmg, 90% acc
-                    //Weakness 2x fire, ice, posion, flying, bug
-                    //0.5 water, electric, grass, ground
-                }
-                else if (CPUpokemon[i].BackgroundImage == butShedinja)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Shadow Snake", "Sword Stance", "Giga Impact", "X-Scissor" };
-                    //Shadow Snake ghost type, always goes first, 40dmg
-                    //Sword Stanceraises attack 2 stages
-                    //giga impact, normal type, no turn next run, 150 dmg, 90% acc
-                    //X-Scissior bug type, 80 dmg
-                    //Can only be hit by fire, flyimg, rock, ghost, dark
-                    //Immune to everything else ^
-                }
-                else if (CPUpokemon[i].BackgroundImage == butVenusaur)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Solar Beam", "Earthquake", "Hidden Power", "Growth" };
-                    //Solar Beam damage on second turn 120 dmg, grass type
-                    //Hidden Power fire type, 60 dmg
-                    //Growth raises attack by one stage
-                    //Weakness 2x fire, ice, flying, psychic
-                    //0.5x water, electric, fighting, fairy
-                    //0.25x grass
-                }
-                else if (CPUpokemon[i].BackgroundImage == butDragonite)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Dragon Dance", "Roost", "Dragon Claw", "Fire Punch" };
-                    //Roost restores half of users max hp
-                    //Fire Punch 10% burn,
-                    //Weak 4x ice, 2x rock, dragon, fairy
-                    //0.5x fire, water, fighting, and bug
-                    //0.25x grass
-                    //Immune to ground
-                }
-                else if (CPUpokemon[i].BackgroundImage == butFroslass)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Shadow Claw", "Thunder Wave", "Shadow Ball", "Ice Beam" };
-                    //Shadow Claw Ghost Type, 70 damage
-                    //Thunder Wave 100% par
-                    //weak 2x fire, rock, ghost, dark, steel
-                    //0.5 ice, poision, bug
-                }
-                else if (CPUpokemon[i].BackgroundImage == butGarchomp)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Sword Stance", "Earthquake", "Dragon Claw", "Outrage" };
-                    //weakness 4x ice, 2x dragon, and fiary
-                    //0.5 fire poision and rock
-                    //immune to electric
-                }
-                else if (CPUpokemon[i].BackgroundImage == butGardevoir)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
-                    //Psychic 10% raise attack, 90dmg
-                    //Misty Explosion 100 dmg
-                    //Weak 2x posions, ghost, and steel
-                    //0.5x psychic
-                    //0.25x fighting
-                    //Immune to dragon
-                }
-                else if (CPUpokemon[i].BackgroundImage == butGengar)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Shadow Ball", "Thunderbolt", "Poltergeist", "Sludge Ball" };
-                    //Poltergiest 100dmg, 90%acc, can only use 5 times
-                    //Sludge Ball poision type, 30% posion, 90 dmg
-                    //weak 2x ground, psychic, ghost, and dark
-                    //0.5x grass and fiary
-                    //0.25 posion and bug
-                    //immune to normal and fighting
-                }
-                else if (CPUpokemon[i].BackgroundImage == butGroudon)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam" };
-                    //fire blast fire type, 10% burn, 110 damage, 85% acc
-                    //weak 2x water, grass, ice
-                    //0.5 poision, rock
-                    //Immune to electric
-                }
-                else if (CPUpokemon[i].BackgroundImage == butIncineroar)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Darkest Lariat", "Flame Charge", "Earthquake", "Sword Stance" };
-                    //Darkest Lariat dark type, 85 dmg, hits, ignores if paralyzed or high def
-                    //Flame Charge fire type, raises speed by one stage, 50 dmg
-                    //Weak 2x water, ground and rock, fighting
-                    //0.5 fire, grass, ice, ghost, dark, and steel
-                    //immune psychic
-                }
-                else if (CPUpokemon[i].BackgroundImage == butLucario)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" };
-                    //Ice Punch 75 dmg
-                    //weak 2x fire, fighting, and ground
-                    //half to noraml,grass,ice,dragon,dark, and steel
-                    //quarter to bug and rock
-                    //immune to posion
-                }
-                else if (CPUpokemon[i].BackgroundImage == butSteelix)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Iron Tail", "Earthquake", "Rock Slide", "Crunch" };
-                    //Iron Tail steel type, 30% raise attack by one stage, 100 dmg, 75% acc
-                    //Rock Slide rock type, 30% flinch, 75dmg, 90% acc
-                    //Crunch dark type, 20% attack by one stage, 80dmg, hits
-                    //weak 2x fire, water, fighting, ground
-                    //0.5 to normal, flying, psychic, bug, dragon, steel, and fairy
-                    //0.25 rock
-                    //immune to elxtric and posion
-                }
-                else if (CPUpokemon[i].BackgroundImage == butSylveon)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Hypervoice", "Psyschock", "Shadow Ball", "Calm mind" };
-                    //Psyshock 80 dmg
-                    //Calm mind raises attack by one stage
-                    //weak 2x poision, steel
-                    //0.5 fighitng, bug, dark
-                    //immune to dragon
-                }
-                else if (CPUpokemon[i].BackgroundImage == butTalonflame)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Sword Stance", "Hurricane", "Flair Blitz", "Roost" };
-                    //Flair Blitz 120 dmg, causes 0.25 damage of its max health to itself, 100% accurate
-                    //weaknesses 4x rock, 2x water, electic
-                    //0.5 fire fighting, steel, and fairy
-                    //0.25 grass and bug
-                    //immune to ground
 
                 }
-                else if (CPUpokemon[i].BackgroundImage == butToxapex)
+                else if (move == "Aeiral Ace")
                 {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap" };
-                    //Gunk Shot poision type move, 120 dmg, 80% acc
-                    //Scald water, 30% burning, 80 dmg
-                    //Liquidation water, 20% lowering defence by one stage, 85 dmg
-                    //Mud Slap ground, 20dmg
-                    //weak 2x electric, ground, psychic
-                    //0.5x fire, water, ice, fighting, posion, bug, steel, fairy
 
                 }
-                else if (CPUpokemon[i].BackgroundImage == butToxicroak)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Acid Spray", "Gunk Shot", "Mud Slap", "Ice Punch" };
-                    //Acid Spray lowers def by 2 stages
-                    //weak 4x psychic, 2x ground and flying
-                    //0.5x grass, fighiting, posion, rock , dark
-                    //0.25 bug
-                }
-                else if (CPUpokemon[i].BackgroundImage == butTyranitar)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Fire Punch", "Dragon Dnace", "Stone Edge", "Ice Punch" };
-                    //weak 4x fighting, 2x water, grass, ground, steel, bug, fairy
-                    //0.5 normal, fire, poision, flying, ghost, and dark
-                    //Immune Psychic
-                }
-                else if (CPUpokemon[i].BackgroundImage == butVikavolt)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Bug Buzz", "Thunder", "Flash Cannon", "Crunch" };
-                    //Bug Buzz bug type 90 damage, 10% lowering def by one stage
-                    //Flash Cannon steel type, 80 dmg, 10% lowering def by one stage
-                    //weak 2x fire, rock
-                    //0.5x electric grass, fighting and steel
-                }
-                else if (CPUpokemon[i].BackgroundImage == butZapdos)
-                {
-                    CPUPokeAndMove[CPUpokemon[i]] = new List<String> { "Thunderbolt", "Thunder", "Roost", "Gunk Shot" };
-                    //weak 2x ice and rock
-                    //0.5 grass, fighting, flying, bug, and steel
-                    //immune to ground
-                }
-            }*/
+            }
+            else if (CPUpokemon[0].BackgroundImage == butArticuno)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Brave Bird", "Hurricane", "Ice Shard", "Frost Breath" };
+                //Brave Bird Flying 120 damage, special 1/3 of the damage to the user
+                //Hurricane Flying type, 130 damage 70% accuracy, 30% confussion
+                //Ice Shard Ice type, 40 damage
+                //Frost Breath always a crit hit, 60 damage, 90% accuracy
+                //Weaknesses 4x rock, 2x fire, electric, and steel
+                //0.5, grass and bug
+                //Immune to ground
+            }
+            else if (CPUpokemon[0].BackgroundImage == butBarbaracle)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Shell Smash", "Dragon Claw", "Razor Shell", "Stone Edge" };
+                //Dragon Claw 80 damage, 100% accuracy
+                //Razor Shell 95% accuracy, 75 damage
+                //4x grass, 2x electric, 2x fighting, 2x ground <- weaknesses
+                //0.5x normal, ice, poision, flying
+                // 0.25x fire
+                // Stone Edge 80% accuracy
+            }
+            else if (CPUpokemon[0].BackgroundImage == butBlastoise)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Water Pulse", "Aura Sphere", "Dragon Pulse", "Dark Pulse" };
+                //Water pulse 60 damage, 20% confusion
+                //Aura Sphere fighitng, 80 damage, 100% acc
+                //Dragon Pulse dragon, 85 damage
+                //Dark dark, 80 damage
+                //Weaknesses 2x electric and grass
+                //0.5x fire, water, ice, and steel
+            }
+            else if (CPUpokemon[0].BackgroundImage == butBlaziken)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Stone Edge", "Hone Claws", "Blaze Kick", "High Jump Kick" };
+                //Stone Edge 80% accuracy
+                //Hone Claws raise attack
+                //Blaze Kick fire type, 85 damage, 90% acc
+                //High Jump Kick fighting type, if misses half health to yourself, 100 damage, 85% acc
+                //Weaknesses 2x water, ground, flying, psychic
+                //0.5x fire, grass, ice, dark, steel
+                //0.25 bug
+
+            }
+            else if (CPUpokemon[0].BackgroundImage == butCharizard)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Earthquake", "Dragon Claw", "Dragon Dance", "Fire Blitz" };
+                //Earthquake ground, 100 damage
+                //Dragon Claw 80 damage, 100% accuracy
+                //Dragon Dance raises attack, and speed, by one stage
+                //Fire Blitz fire, hits, 120 damage, 1/3 of damage to user (brave bird but fire)
+                //Weakness 4x rock, 2x water and electric,
+                //0.5x fire, fighting, steel, fairy,
+                //0.25x grass, bug
+                //immune ground
+
+            }
+            else if (CPUpokemon[0].BackgroundImage == butDragapult)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Dragon Darts", "Dragon Dance", "Night Shade", "Shadow Ball" };
+                //Dragon Darts Dragon type, 100 damage
+                //Dragon Dance raises attack, and speed, by one stage
+                //Night Shade 50 damage
+                //Shadow Ball ghost type, 20% chance to raise attack, 80 dmg
+                //Weakness 2x ice, ghost, dragon, dark, fairy
+                //0.5x fire, water, electic, grass, posion, bug
+                //Immune cannot be hit by normal or fighting
+            }
+            else if (CPUpokemon[0].BackgroundImage == butKrookodile)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Outrage", "Earthquake", "Crunch", "Stone Edge" };
+                //Outrage:
+                //Stone Edge 80% accuracy
+                //Earthquake ground, 100 damage
+                //Crunch Dark type move, 80 damage
+                //Weaknesses 2x water, grass, ice, fighting, bug, and fairy
+                //0.5x poision, rock, ghost, and dark
+                //Immune (not hit) electric, and psychic
+            }
+            else if (CPUpokemon[0].BackgroundImage == butKyogre)
+            {
+
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Water Spout", "Thunder", "Ice beam", "Origin Pulse" };
+                //Water spout (150 x crhp) / hpmax
+                //Thunder 3/10 chance for par, 110 damage, 70% acc
+                //Ice Beam Ice type, 10% freeze, 90 damage
+                //Origin Pulse 180 damage, 80% acc
+                //Weaknesses 2x electric and grass
+                //0.5x fire, water, ice, and steel
+            }
+            else if (CPUpokemon[0].BackgroundImage == butMewtwo)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Aura Sphere", "Thunder", "Shadow Ball", "Ice Beam" };
+                //Aura Sphere fighitng, 80 damage, 100% acc
+                //Thunder 3/10 chance for par, 110 damage, 70% acc
+                //Ice Beam Ice type, 10% freeze, 90 damage
+                //Shadow Ball ghost type, 20 % chance to raise attack, 80 dmg
+                //Weakness 2x bug, ghost, dark
+                //0.5 fighting and psychic
+            }
+            else if (CPUpokemon[0].BackgroundImage == butPikachu)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Brick Break", "Thunderbolt", "Thunder Punch", "Quick Attack" };
+                //Brick Break fighting type, 75 dmh
+                //Thunder type elctric, 10% par, 90 dmg
+                //Thunder Punc 10% par, 75 dmg
+                //Quick Attack  40 damage, always hits first (set speed nuts cause why not)
+                //Weakness 2x ground
+                //0.5x electric flying and steel
+            }
+            else if (CPUpokemon[0].BackgroundImage == butSceptile)
+            {
+                //Grass Type
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Hone Claws", "Leaf Blade", "Dynamic Punch", "Rock Slide" };
+                //Leaf Blade grass, 90 dmg, crit 1/8
+                //Dynamic Punch, 100% confussion, 100 dmg, 50% acc
+                //Rock Slide rock, 75 dmg, 90% acc
+                //Weakness 2x fire, ice, posion, flying, bug
+                //0.5 water, electric, grass, ground
+            }
+            else if (CPUpokemon[0].BackgroundImage == butShedinja)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Shadow Snake", "Sword Stance", "Giga Impact", "X-Scissor" };
+                //Shadow Snake ghost type, always goes first, 40dmg
+                //Sword Stanceraises attack 2 stages
+                //giga impact, normal type, no turn next run, 150 dmg, 90% acc
+                //X-Scissior bug type, 80 dmg
+                //Can only be hit by fire, flyimg, rock, ghost, dark
+                //Immune to everything else ^
+            }
+            else if (CPUpokemon[0].BackgroundImage == butVenusaur)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Solar Beam", "Earthquake", "Hidden Power", "Growth" };
+                //Solar Beam damage on second turn 120 dmg, grass type
+                //Hidden Power fire type, 60 dmg
+                //Growth raises attack by one stage
+                //Weakness 2x fire, ice, flying, psychic
+                //0.5x water, electric, fighting, fairy
+                //0.25x grass
+            }
+            else if (CPUpokemon[0].BackgroundImage == butDragonite)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Dragon Dance", "Roost", "Dragon Claw", "Fire Punch" };
+                //Roost restores half of users max hp
+                //Fire Punch 10% burn,
+                //Weak 4x ice, 2x rock, dragon, fairy
+                //0.5x fire, water, fighting, and bug
+                //0.25x grass
+                //Immune to ground
+            }
+            else if (CPUpokemon[0].BackgroundImage == butFroslass)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Shadow Claw", "Thunder Wave", "Shadow Ball", "Ice Beam" };
+                //Shadow Claw Ghost Type, 70 damage
+                //Thunder Wave 100% par
+                //weak 2x fire, rock, ghost, dark, steel
+                //0.5 ice, poision, bug
+            }
+            else if (CPUpokemon[0].BackgroundImage == butGarchomp)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Sword Stance", "Earthquake", "Dragon Claw", "Outrage" };
+                //weakness 4x ice, 2x dragon, and fiary
+                //0.5 fire poision and rock
+                //immune to electric
+            }
+            else if (CPUpokemon[0].BackgroundImage == butGardevoir)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Psychic", "Thunderboly", "Shadow Ball", "Misty Explosion" };
+                //Psychic 10% raise attack, 90dmg
+                //Misty Explosion 100 dmg
+                //Weak 2x posions, ghost, and steel
+                //0.5x psychic
+                //0.25x fighting
+                //Immune to dragon
+            }
+            else if (CPUpokemon[0].BackgroundImage == butGengar)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Shadow Ball", "Thunderbolt", "Poltergeist", "Sludge Ball" };
+                //Poltergiest 100dmg, 90%acc, can only use 5 times
+                //Sludge Ball poision type, 30% posion, 90 dmg
+                //weak 2x ground, psychic, ghost, and dark
+                //0.5x grass and fiary
+                //0.25 posion and bug
+                //immune to normal and fighting
+            }
+            else if (CPUpokemon[0].BackgroundImage == butGroudon)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Fire Blast", "Earthquake", "Stone Edge", "Solar Beam" };
+                //fire blast fire type, 10% burn, 110 damage, 85% acc
+                //weak 2x water, grass, ice
+                //0.5 poision, rock
+                //Immune to electric
+            }
+            else if (CPUpokemon[0].BackgroundImage == butIncineroar)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Darkest Lariat", "Flame Charge", "Earthquake", "Sword Stance" };
+                //Darkest Lariat dark type, 85 dmg, hits, ignores if paralyzed or high def
+                //Flame Charge fire type, raises speed by one stage, 50 dmg
+                //Weak 2x water, ground and rock, fighting
+                //0.5 fire, grass, ice, ghost, dark, and steel
+                //immune psychic
+            }
+            else if (CPUpokemon[0].BackgroundImage == butLucario)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Sword Stance", "High Jump Kick", "Shadow Claw", "Ice Punch" };
+                //Ice Punch 75 dmg
+                //weak 2x fire, fighting, and ground
+                //half to noraml,grass,ice,dragon,dark, and steel
+                //quarter to bug and rock
+                //immune to posion
+            }
+            else if (CPUpokemon[0].BackgroundImage == butSteelix)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Iron Tail", "Earthquake", "Rock Slide", "Crunch" };
+                //Iron Tail steel type, 30% raise attack by one stage, 100 dmg, 75% acc
+                //Rock Slide rock type, 30% flinch, 75dmg, 90% acc
+                //Crunch dark type, 20% attack by one stage, 80dmg, hits
+                //weak 2x fire, water, fighting, ground
+                //0.5 to normal, flying, psychic, bug, dragon, steel, and fairy
+                //0.25 rock
+                //immune to elxtric and posion
+            }
+            else if (CPUpokemon[0].BackgroundImage == butSylveon)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Hypervoice", "Psyschock", "Shadow Ball", "Calm mind" };
+                //Psyshock 80 dmg
+                //Calm mind raises attack by one stage
+                //weak 2x poision, steel
+                //0.5 fighitng, bug, dark
+                //immune to dragon
+            }
+            else if (CPUpokemon[0].BackgroundImage == butTalonflame)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Sword Stance", "Hurricane", "Flair Blitz", "Roost" };
+                //Flair Blitz 120 dmg, causes 0.25 damage of its max health to itself, 100% accurate
+                //weaknesses 4x rock, 2x water, electic
+                //0.5 fire fighting, steel, and fairy
+                //0.25 grass and bug
+                //immune to ground
+
+            }
+            else if (CPUpokemon[0].BackgroundImage == butToxapex)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Gunk Shot", "Scald", "Liquidation", "Mud Slap" };
+                //Gunk Shot poision type move, 120 dmg, 80% acc
+                //Scald water, 30% burning, 80 dmg
+                //Liquidation water, 20% lowering defence by one stage, 85 dmg
+                //Mud Slap ground, 20dmg
+                //weak 2x electric, ground, psychic
+                //0.5x fire, water, ice, fighting, posion, bug, steel, fairy
+
+            }
+            else if (CPUpokemon[0].BackgroundImage == butToxicroak)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Acid Spray", "Gunk Shot", "Mud Slap", "Ice Punch" };
+                //Acid Spray lowers def by 2 stages
+                //weak 4x psychic, 2x ground and flying
+                //0.5x grass, fighiting, posion, rock , dark
+                //0.25 bug
+            }
+            else if (CPUpokemon[0].BackgroundImage == butTyranitar)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Fire Punch", "Dragon Dnace", "Stone Edge", "Ice Punch" };
+                //weak 4x fighting, 2x water, grass, ground, steel, bug, fairy
+                //0.5 normal, fire, poision, flying, ghost, and dark
+                //Immune Psychic
+            }
+            else if (CPUpokemon[0].BackgroundImage == butVikavolt)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Bug Buzz", "Thunder", "Flash Cannon", "Crunch" };
+                //Bug Buzz bug type 90 damage, 10% lowering def by one stage
+                //Flash Cannon steel type, 80 dmg, 10% lowering def by one stage
+                //weak 2x fire, rock
+                //0.5x electric grass, fighting and steel
+            }
+            else if (CPUpokemon[0].BackgroundImage == butZapdos)
+            {
+                CPUPokeAndMove[CPUpokemon[0]] = new List<String> { "Thunderbolt", "Thunder", "Roost", "Gunk Shot" };
+                //weak 2x ice and rock
+                //0.5 grass, fighting, flying, bug, and steel
+                //immune to ground
+            }
+            */
+
             //To Show players first pokemon in battle
             team1Poke.Image = PlayerPokemon[0];
 
@@ -1712,7 +1742,7 @@ namespace PokemonGame
             return 0;
         }
 
-        private int StoneEdge()
+        private int StoneEdge(int pokeHealth)
         {
             Random rnd = new Random();
             int ran = rnd.Next(1, 5);
@@ -1723,7 +1753,7 @@ namespace PokemonGame
             }
             else
             {
-                return dmg;
+                return pokeHealth - dmg;
             }
         }
 
@@ -1952,6 +1982,20 @@ namespace PokemonGame
 
         }
 
+        private int AeiralAce(int pokemonHealth)
+        {
+            int dmg = 60;
+
+            return pokemonHealth;
+        }
+
+        private int StealthRock(int pokemonHealth)
+        {
+            int dmg = 40;
+
+            return pokemonHealth - dmg;
+        }
+
         private int BrickBreak()
         {
             int dmg = 75;
@@ -2130,12 +2174,23 @@ namespace PokemonGame
             return dmg;
         }
 
-        private int FlashCannon()
+        private int FlashCannon(int PokemonHealth)
         {
             //10% lowering targ def by one stage
             int dmg = 80;
-            return dmg;
+            return PokemonHealth - dmg;
         }
+
+        private int Taunt(int PokemonHealth)
+        {
+            int dmg = 20;
+            if(whoTurn == true)
+            {
+
+            }
+            return PokemonHealth - dmg;
+        }
+
 
         //Move Battle System
         private void CPUMoves(List<Image> CPUpokemon)
@@ -2146,9 +2201,22 @@ namespace PokemonGame
             }
         }
 
+       
 
-        private void Move1_Click(object sender, EventArgs e)
+
+        private void Move1_Click(object sender, EventArgs e, Image butCharizard, Image butBlaziken, Image butBlastoise, Image butBarbaracle, Image butIncineroar, Image butAerodactyl, Image butArticuno, Image butDragapult, Image butDragonite, Image butFroslass, Image butGardevoir, Image butGengar, Image butGroudon, Image butKrookodile, Image butKyogre, Image butLucario, Image butGarchomp, Image butMewtwo, Image butPikachu, Image butSceptile, Image butShedinja, Image butSteelix, Image butSylveon, Image butTalonflame, Image butToxapex, Image butToxicroak, Image butTyranitar, Image butVenusaur, Image butVikavolt, Image butZapdos)
         {
+            
+            if(whoTurn == false)
+            {
+                team2Turn(butCharizard, butBlaziken, butBlastoise, butBarbaracle, butIncineroar, butAerodactyl, butArticuno, butDragapult, butDragonite, butFroslass, butGardevoir, butGengar, butGroudon, butKrookodile, butKyogre, butLucario, butGarchomp, butMewtwo, butPikachu, butSceptile, butShedinja,  butSteelix, butSylveon, butTalonflame, butToxapex, butToxicroak, butTyranitar, butVenusaur, butVikavolt, butZapdos);
+                whoTurn = true;
+            }
+            else if (whoTurn == true)
+            {
+                whoTurn = false;
+            }
+
             if (Move1.Text == "Water Pulse")
             {
                 CPUHealth.Value = WaterPulse(CPUHealth.Value);
@@ -2559,19 +2627,131 @@ namespace PokemonGame
 
                 if (move == "Taunt")
                 {
+                    PlayerHealth.Value = Taunt(PlayerHealth.Value);
+                    if (PlayerHealth.Value <= PlayerHealth.Minimum)
+                    {
+                        PlayerPokemon.RemoveAt(0);
+                        if (PlayerPokemon[1] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[1];
+                        }
+                        else if (PlayerPokemon[2] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[2];
+                        }
+                        else if (PlayerPokemon[3] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[3];
+                        }
+                        else if (PlayerPokemon[4] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[4];
+                        }
+                        else if (PlayerPokemon[5] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[5];
+                        }
+                        else
+                        {
 
+                        }
+                    }
                 }
                 else if (move == "Stealth Rock")
                 {
+                    PlayerHealth.Value = StealthRock(PlayerHealth.Value);
+                    if (PlayerHealth.Value <= PlayerHealth.Minimum)
+                    {
+                        PlayerPokemon.RemoveAt(0);
+                        if (PlayerPokemon[1] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[1];
+                        }
+                        else if (PlayerPokemon[2] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[2];
+                        }
+                        else if (PlayerPokemon[3] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[3];
+                        }
+                        else if (PlayerPokemon[4] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[4];
+                        }
+                        else if (PlayerPokemon[5] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[5];
+                        }
+                        else
+                        {
 
+                        }
+                    }
                 }
                 else if (move == "Stone Edge")
                 {
+                    PlayerHealth.Value = StoneEdge(PlayerHealth.Value);
+                    if (PlayerHealth.Value <= PlayerHealth.Minimum)
+                    {
+                        PlayerPokemon.RemoveAt(0);
+                        if (PlayerPokemon[1] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[1];
+                        }
+                        else if(PlayerPokemon[2] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[2];
+                        }
+                        else if (PlayerPokemon[3] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[3];
+                        }
+                        else if (PlayerPokemon[4] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[4];
+                        }                           
+                        else if (PlayerPokemon[5] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[5];
+                        }
+                        else
+                        {
 
+                        }
+                    }
                 }
                 else if (move == "Aeiral Ace")
                 {
+                    PlayerHealth.Value = AeiralAce(PlayerHealth.Value);
+                    if (PlayerHealth.Value <= PlayerHealth.Minimum)
+                    {
+                        PlayerPokemon.RemoveAt(0);
+                        if (PlayerPokemon[1] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[1];
+                        }
+                        else if (PlayerPokemon[2] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[2];
+                        }
+                        else if (PlayerPokemon[3] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[3];
+                        }
+                        else if (PlayerPokemon[4] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[4];
+                        }
+                        else if (PlayerPokemon[5] != null)
+                        {
+                            PlayerPokemon[0] = PlayerPokemon[5];
+                        }
+                        else
+                        {
 
+                        }
+                    }
                 }
                 moves.Clear();
             }
@@ -2583,11 +2763,12 @@ namespace PokemonGame
                 Random ran = new Random();
                 selectMove = ran.Next(1, 5);
 
+                
                 move = moves[selectMove];
 
                 if (move == "Brave Bird")
                 {
-
+                    
                 }
                 else if (move == "Hurricane")
                 {
@@ -2646,17 +2827,19 @@ namespace PokemonGame
                 }
                 else if (move == "Aura Sphere")
                 {
+                    /*Example*/
                     AuraSphere();
                 }
                 else if (move == "Dragon Pulse")
                 {
+                    /*Example*/
                     DragonPulse();
                 }
                 else if (move == "Dark Pulse")
                 {
+                    /*Example*/
                     DarkPulse();
                 }
-
                 moves.Clear();
             }
 
